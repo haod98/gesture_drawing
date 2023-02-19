@@ -1,8 +1,11 @@
-require('dotenv').config();
-const express = require('express');
-const axios = require('axios');
+import express, { Express } from 'express';
+import axios from 'axios';
+import * as dotenv from 'dotenv';
+import { PinterestResponse } from './types';
+dotenv.config();
+
 const PORT = process.env.PORT || 3001;
-const app = express();
+const app: Express = express();
 
 const CLIENT_ID = `client_id=${process.env.CLIENT_ID}`;
 const REDIRECT_URI = `redirect_uri=${process.env.REDIRECT_URI}`;
@@ -28,7 +31,7 @@ app.get('/callback', (req, res) => {
         },
       }
     )
-    .then((data) => {
+    .then((data: PinterestResponse) => {
       // TODO: Implement expires in and refresh token expires
       res.redirect(
         `${process.env.BASE_URL}/?access_token=${data.data.access_token}&refresh_token=${data.data.refresh_token}`
