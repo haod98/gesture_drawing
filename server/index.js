@@ -28,7 +28,12 @@ app.get('/callback', (req, res) => {
         },
       }
     )
-    .then((res) => console.log(res));
+    .then((data) => {
+      // TODO: Implement expires in and refresh token expires
+      res.redirect(
+        `${process.env.BASE_URL}/?access_token=${data.data.access_token}&refresh_token=${data.data.refresh_token}`
+      );
+    });
 });
 
 app.listen(PORT, () => {
