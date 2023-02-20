@@ -1,5 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export default function Board() {
-  return <h1>Board</h1>;
+  const [boards, setBoards] = useState([]);
+  useEffect(() => {
+    axios
+      .get('/boards', {
+        withCredentials: true,
+      })
+      .then((res) => setBoards(res.data));
+  }, []);
+  return (
+    <div>
+      <ul>
+        {boards.map((board) => (
+          <a href={'boards/' + board['id']} key={board['id']}>
+            <li>{board['name']}</li>
+          </a>
+        ))}
+      </ul>
+    </div>
+  );
 }

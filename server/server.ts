@@ -2,10 +2,13 @@ import express, { Express } from 'express';
 import axios from 'axios';
 import * as dotenv from 'dotenv';
 import { PinterestResponse } from './types';
+import cookieParser from 'cookie-parser';
+
 dotenv.config();
 
 const PORT = process.env.PORT || 3001;
 const app: Express = express();
+app.use(cookieParser());
 
 const CLIENT_ID = `client_id=${process.env.CLIENT_ID}`;
 const REDIRECT_URI = `redirect_uri=${process.env.REDIRECT_URI}`;
@@ -33,10 +36,21 @@ app.get('/callback', (req, res) => {
     )
     .then((data: PinterestResponse) => {
       // TODO: Implement expires in and refresh token expires
-      res.redirect(
-        `${process.env.BASE_URL}/?access_token=${data.data.access_token}&refresh_token=${data.data.refresh_token}`
-      );
+      res.cookie('access_token', data.data.access_token);
+      res.cookie('refresh_token', data.data.refresh_token);
+      res.redirect(`${process.env.BASE_URL}/boards`);
     });
+});
+
+app.get('/boards', (req, res) => {
+  axios
+    .get('https://api.pinterest.com/v5/boards', {
+      headers: {
+        Authorization: `Bearer ${req.cookies.access_token}`,
+        'Content-Type': 'application/json',
+      },
+    })
+    .then((data) => res.json(data.data.items));
 });
 
 app.listen(PORT, () => {
