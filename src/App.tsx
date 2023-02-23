@@ -1,7 +1,8 @@
 import React from 'react';
-import Board from './components/Board/Board';
+import Boards from './components/Board/Boards';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Login from './components/login/Login';
+import Board from './components/Board/Board';
 
 function App() {
   return (
@@ -10,7 +11,8 @@ function App() {
       <Login />
       <BrowserRouter>
         <Routes>
-          <Route path={'/boards'} element={<Board />} />
+          <Route path={'/boards'} element={<Boards />} />
+          <Route path={'/boards/:id'} element={<Board />} />
         </Routes>
       </BrowserRouter>
     </div>
