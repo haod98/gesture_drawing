@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-export default function Board() {
+export default function Boards() {
   const [boards, setBoards] = useState([]);
   useEffect(() => {
     axios
@@ -14,9 +14,11 @@ export default function Board() {
     <div>
       <ul>
         {boards.map((board) => (
-          <a href={'boards/' + board['id']} key={board['id']}>
-            <li>{board['name']}</li>
-          </a>
+          <li>
+            <a href={'/boards/' + board['id']} key={board['id']}>
+              {board['name']}
+            </a>
+          </li>
         ))}
       </ul>
     </div>
