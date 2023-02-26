@@ -11,6 +11,9 @@ export default function Boards() {
       })
       .then((res) => {
         setBoards(res.data);
+      })
+      .catch((e) => {
+        console.warn(e);
       });
   }, []);
   return (

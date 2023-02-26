@@ -11,10 +11,15 @@ export default function Board() {
   const boardName = searchParams.get('board_name');
 
   useEffect(() => {
-    axios.get(`/boards/${id}`).then((res) => {
-      setBoards(res.data);
-      setBoardOwner(res.data[0].board_owner.username);
-    });
+    axios
+      .get(`/boards/${id}`)
+      .then((res) => {
+        setBoards(res.data);
+        setBoardOwner(res.data[0].board_owner.username);
+      })
+      .catch((e) => {
+        console.warn(e);
+      });
   }, [id]);
 
   return (
