@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useLocation, useParams } from 'react-router-dom';
 import Spinner from '../../helper/Spinner';
+import Timer from '../timer/Timer';
 
 export default function Board() {
   const { id } = useParams();
@@ -19,6 +20,7 @@ export default function Board() {
       .then((res) => {
         setBoards(res.data);
         setBoardOwner(res.data[0].board_owner.username);
+        console.log(res.data[0]);
       })
       .catch((e) => {
         console.warn(e);
@@ -34,7 +36,8 @@ export default function Board() {
         <div>
           <h2>Board owner: {boardOwner}</h2>
           <p>{boardName}</p>
-          <ul>
+          <Timer />
+          <ul className="grid grid-cols-4 gap-3 ">
             {boards.map((board, i) => {
               return (
                 <li key={i}>
