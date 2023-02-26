@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 export default function Board() {
   const { id } = useParams();
   const [boards, setBoards] = useState([]);
   const [boardOwner, setBoardOwner] = useState('');
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const boardName = searchParams.get('board_name');
 
   useEffect(() => {
     axios.get(`/boards/${id}`).then((res) => {
@@ -17,6 +20,7 @@ export default function Board() {
   return (
     <div>
       <h2>Board owner: {boardOwner}</h2>
+      <p>{boardName}</p>
       <ul>
         {boards.map((board, i) => {
           return (
