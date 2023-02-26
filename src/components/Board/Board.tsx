@@ -4,12 +4,28 @@ import { useParams } from 'react-router-dom';
 
 export default function Board() {
   const { id } = useParams();
-  const [board, setBoard] = useState([]);
+  const [boards, setBoards] = useState([]);
+  const [boardOwner, setBoardOwner] = useState('');
+
   useEffect(() => {
     axios.get(`/boards/${id}`).then((res) => {
-      setBoard(res.data);
-      console.log(board);
+      setBoards(res.data);
+      setBoardOwner(res.data[0].board_owner.username);
     });
-  });
-  return <h1>Single Board</h1>;
+  }, [id]);
+
+  return (
+    <div>
+      <h2>Board owner: {boardOwner}</h2>
+      <ul>
+        {boards.map((board, i) => {
+          return (
+            <li key={i}>
+              {<img src={board['media']['images']['400x300']['url']} alt="" />}
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
 }
