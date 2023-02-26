@@ -38,7 +38,7 @@ app.get('/callback', (req, res) => {
       // TODO: Implement expires in and refresh token expires
       res.cookie('access_token', data.data.access_token);
       res.cookie('refresh_token', data.data.refresh_token);
-      res.redirect(`${process.env.BASE_URL}/boards`);
+      res.redirect(`${process.env.BASE_URL}/`);
     });
 });
 

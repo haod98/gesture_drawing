@@ -14,10 +14,8 @@ export default function Boards() {
     <div>
       <ul>
         {boards.map((board) => (
-          <li>
-            <a href={'/boards/' + board['id']} key={board['id']}>
-              {board['name']}
-            </a>
+          <li key={board['id']}>
+            <a href={'/boards/' + board['id']}>{board['name']}</a>
           </li>
         ))}
       </ul>

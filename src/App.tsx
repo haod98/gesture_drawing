@@ -11,7 +11,7 @@ function App() {
       <Login />
       <BrowserRouter>
         <Routes>
-          <Route path={'/boards'} element={<Boards />} />
+          <Route path={'/'} element={<Boards />} />
           <Route path={'/boards/:id'} element={<Board />} />
         </Routes>
       </BrowserRouter>
